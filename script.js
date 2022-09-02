@@ -22,35 +22,36 @@ const nineBtn = document.getElementById('9')
 
 let lastNum = display.innerText;
 let currentOperator = null;
-let counter = 0;
+let clearScreenOnNextNumberSelection = false;
 
 // window.onclick = (e) => explode(e);
 allClearBtn.onclick = () => clickedAllClear();
-addBtn.onclick = () => setOperator(add);
-divideBtn.onclick = () => setOperator(divide);
-multiplyBtn.onclick = () => setOperator(multiply);
-subtractBtn.onclick = () => setOperator(subtract);
+addBtn.onclick = (e) => clickedOperator(e, add);
+divideBtn.onclick = (e) => clickedOperator(e, divide);
+multiplyBtn.onclick = (e) => clickedOperator(e, multiply);
+subtractBtn.onclick = (e) => clickedOperator(e, subtract);
 
 plusMinusBtn.onclick = () => clickedPlusMinus();
 percentBtn.onclick = () => clickedPercent();
-equalBtn.onclick 
+equalBtn.onclick = () => clickedEqual();
 
-zeroBtn.onclick = (e) => updateDisplay(e,0);
-oneBtn.onclick = (e) => updateDisplay(e,1);
-twoBtn.onclick = (e) => updateDisplay(e,2);
-threeBtn.onclick = (e) => updateDisplay(e,3);
-fourBtn.onclick = (e) => updateDisplay(e,4);
-fiveBtn.onclick = (e) => updateDisplay(e,5);
-sixBtn.onclick = (e) => updateDisplay(e,6);
-sevenBtn.onclick = (e) => updateDisplay(e,7);
-eightBtn.onclick = (e) => updateDisplay(e,8);
-nineBtn.onclick = (e) => updateDisplay(e,9);
-decimalBtn.onclick = (e) => updateDisplay(e,'.');
+zeroBtn.onclick = (e) => clickedNumber(e,0);
+oneBtn.onclick = (e) => clickedNumber(e,1);
+twoBtn.onclick = (e) => clickedNumber(e,2);
+threeBtn.onclick = (e) => clickedNumber(e,3);
+fourBtn.onclick = (e) => clickedNumber(e,4);
+fiveBtn.onclick = (e) => clickedNumber(e,5);
+sixBtn.onclick = (e) => clickedNumber(e,6);
+sevenBtn.onclick = (e) => clickedNumber(e,7);
+eightBtn.onclick = (e) => clickedNumber(e,8);
+nineBtn.onclick = (e) => clickedNumber(e,9);
+decimalBtn.onclick = (e) => clickedNumber(e,'.');
 
 const multiply = (num1, num2) => {return +num1 * +num2}
 const divide = (num1, num2) => {return +num1 / +num2}
 const add = (num1, num2) => {return +num1 + +num2}
 const subtract = (num1, num2) => {return +num1 - +num2}
+const percent = (num) => {return +num/100}
 
 function clickedAllClear () {
     lastNum = 0;
@@ -68,19 +69,46 @@ function clickedPercent() {
 
 }
 
-function updateDisplay(e, txt) {
+function clickedNumber(e, txt) {
+    if (clearScreenOnNextNumberSelection) display.innerText = '';
+    
     if (e.target.id === 'decimal' && decimalExists()) return;
     if (e.target.id >= 0 && isFirstEntry()) display.innerText = '';
     display.innerText += txt;
 }
 
-function stash() {
-    lastNum = display.innerText
+function clickedOperator(e, operator) {
+    currentOperator = operator;
+    lastNum = +display.innerText;
+    clearScreenOnNextNumberSelection = true;
 }
 
-function setOperator(operator) {
-    currentOperator = operator;
+function clickedEqual() {
+    let num1 = +display.innerText;
+    let num2 = +lastNum;
+    display.innerText = currentOperator(num1, num2)
 }
+
+function main(e) {
+
+
+    // if number clicked when there is a number in the stash and the operator is loaded
+    //    clear the screen if this is the first number entry after operator loading, and take the number
+    //    else take number entry as usual
+
+    // if equal is clicked (and there is a number in stash and operator is loaded)
+    //    apply the loaded operator on the stashed number and screen number
+    //    then update the display
+    //    clear the operator
+
+    // if operator +,-,/,* clicked (and there is a number in stash and operator is loaded)
+    //    apply the loaded operator on the stashed number and screen number
+    //    then update the display
+    //    update the operator function
+    //    set lastNum equal to current result 
+}
+
+
 
 function decimalExists() {
     return (display.innerText.indexOf('.') > 0);
@@ -92,14 +120,7 @@ function isFirstEntry() {
 
 
 
-
-
-
-
-
-
-
-
+// let explodeCounter = 0;
 // function explode(e) {
 //     // console.log(e.target)
 //     // console.log(e.target.id)
@@ -107,8 +128,8 @@ function isFirstEntry() {
 //     let classes = Array.from(e.target.classList)
 
 //     // placeholder for future exploding fun
-//     if (e.target.id === '0') counter++;
-//     if (counter > 5 ) {
+//     if (e.target.id === '0') explodeCounter++;
+//     if (explodeCounter > 5 ) {
 //         zeroBtn.classList.add('button-explode')
 //     }
 // }
