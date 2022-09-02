@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div id="main">
+        <div id="screen"></div>
+        <div id="button-panel">
+            <div id="ac" class="button">AC</div>
+            <div id="plusminus" class="button">±</div>
+            <div id="percent" class="button">%</div>
+            <div id="divide" class="button">÷</div>
+            <div id="7" class="button">7</div>
+            <div id="8" class="button">7</div>
+            <div id="9" class="button">9</div>
+            <div id="multiply" class="button">×</div>
+            <div id="4" class="button">4</div>
+            <div id="5" class="button">5</div>
+            <div id="6" class="button">6</div>
+            <div id="subtrat" class="button">-</div>
+            <div id="1" class="button">1</div>
+            <div id="2" class="button">2</div>
+            <div id="3" class="button">3</div>
+            <div id="add" class="button">+</div>
+            <div id="0" class="button">0</div>
+            <div id="point" class="button">.</div>
+            <div id="equal" class="button">=</div>
+        </div>
+    </div>
+</body>
+<style>
+    body, html {
+        font-family: sans-serif;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #main {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 420px;
+        height: 640px;
+    }
+
+    #screen {
+        height: 120px;
+        width: 400px;
+        margin-bottom: auto;
+        border: solid 4px black;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: lightgrey;
+        font-size: 4rem;
+    }
+
+    #button-panel {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: space-between;
+        width: 400px;
+        height: 500px;
+    }
+
+    .button {
+        box-sizing: border-box;
+        height: 95px;
+        width: 95px;
+        border-radius: 10px;
+        border: solid 1px black;
+        background-color: rgb(13, 154, 131);
+        font-size: 2rem;
+        font-weight: bold;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .button:active {
+        background-color: rgb(6, 77, 65);
+    }
+
+
+    #equal {
+        width: 190px;
+    }
+
+    /* * {
+        border: solid 1px red;
+    } */
+</style>
+</html>
