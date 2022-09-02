@@ -24,13 +24,16 @@ let lastNum = display.innerText;
 let currentOperator = null;
 let counter = 0;
 
-// window.onclick = (e) => updateDisplay(e);
+// window.onclick = (e) => explode(e);
 allClearBtn.onclick = () => clickedAllClear();
 addBtn.onclick = () => setOperator(add);
 divideBtn.onclick = () => setOperator(divide);
 multiplyBtn.onclick = () => setOperator(multiply);
 subtractBtn.onclick = () => setOperator(subtract);
-equalBtn
+
+plusMinusBtn.onclick = () => clickedPlusMinus();
+percentBtn.onclick = () => clickedPercent();
+equalBtn.onclick 
 
 zeroBtn.onclick = (e) => updateDisplay(e,0);
 oneBtn.onclick = (e) => updateDisplay(e,1);
@@ -55,16 +58,19 @@ function clickedAllClear () {
     currentOperator = null;
 }
 
+function clickedPlusMinus() {
+    let current = display.innerText; 
+    if (current.indexOf('-') < 0) display.innerText = '-' + display.innerText;
+    else display.innerText = current.slice(1);
+}
+
+function clickedPercent() {
+
+}
+
 function updateDisplay(e, txt) {
-
-    if (e.target.id === 'decimal') {
-        if (decimalExists()) return;
-    }
-
-    if (e.target.id >= 0) {
-        if (isFirstEntry()) display.innerText = '';
-    }
-
+    if (e.target.id === 'decimal' && decimalExists()) return;
+    if (e.target.id >= 0 && isFirstEntry()) display.innerText = '';
     display.innerText += txt;
 }
 
@@ -94,7 +100,7 @@ function isFirstEntry() {
 
 
 
-// function updateDisplay(e) {
+// function explode(e) {
 //     // console.log(e.target)
 //     // console.log(e.target.id)
 
