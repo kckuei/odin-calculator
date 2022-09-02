@@ -24,7 +24,7 @@ let lastNum = display.innerText;
 let currentOperator = null;
 let clearScreenOnNextNumberSelection = false;
 
-// window.onclick = (e) => explode(e);
+window.onclick = (e) => explode(e);
 allClearBtn.onclick = () => clickedAllClear();
 addBtn.onclick = (e) => clickedOperator(e, add);
 divideBtn.onclick = (e) => clickedOperator(e, divide);
@@ -87,31 +87,18 @@ function clickedOperator(e, operator) {
 }
 
 function clickedEqual() {
-    let num1 = +display.innerText;
-    let num2 = +lastNum;
-    display.innerText = currentOperator(num1, num2)
+    if (lastNum) {
+        let num1 = +lastNum;
+        let num2 = +display.innerText;
+        display.innerText = currentOperator(num1, num2)
+        lastNum = null;
+    }
 }
 
 function main(e) {
 
 
-    // if number clicked when there is a number in the stash and the operator is loaded
-    //    clear the screen if this is the first number entry after operator loading, and take the number
-    //    else take number entry as usual
-
-    // if equal is clicked (and there is a number in stash and operator is loaded)
-    //    apply the loaded operator on the stashed number and screen number
-    //    then update the display
-    //    clear the operator
-
-    // if operator +,-,/,* clicked (and there is a number in stash and operator is loaded)
-    //    apply the loaded operator on the stashed number and screen number
-    //    then update the display
-    //    update the operator function
-    //    set lastNum equal to current result 
 }
-
-
 
 function decimalExists() {
     return (display.innerText.indexOf('.') > 0);
@@ -123,41 +110,13 @@ function isFirstEntry() {
 
 
 
-// let explodeCounter = 0;
-// function explode(e) {
-//     // console.log(e.target)
-//     // console.log(e.target.id)
+let explodeCounter = 0;
+function explode(e) {
+    let classes = Array.from(e.target.classList)
 
-//     let classes = Array.from(e.target.classList)
-
-//     // placeholder for future exploding fun
-//     if (e.target.id === '0') explodeCounter++;
-//     if (explodeCounter > 5 ) {
-//         zeroBtn.classList.add('button-explode')
-//     }
-// }
-
-
-
-
-
-
-// if (classes.indexOf('operator') > 0 && currentOperator !== null) {
-//     // console.log(typeof +lastNum)
-//     // console.log(typeof +display.innerText)
-//     let num1 = +lastNum;
-//     let num2 = +display.innerText;
-//     display.innerText = currentOperator(num1, num2);
-
-//     // currentOperator = currentOperato
-//     lastNum = display.innerText;
-// }
-
-// // if operator
-//     // update the stash
-//     // saver the operator
-//     // if have previous operator
-
-// // if number
-//     // update the display
-
+    // placeholder for future exploding fun
+    if (e.target.id === '0') explodeCounter++;
+    if (explodeCounter > 5 ) {
+        zeroBtn.classList.add('button-explode')
+    }
+}

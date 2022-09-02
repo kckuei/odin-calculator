@@ -32,3 +32,20 @@ Trivial implmeentation
 // 1 + 1 + =  --> 2
 
 /// make keys pop off if clicked fast enough
+
+
+
+// if number clicked when there is a number in the stash and the operator is loaded
+//    clear the screen if this is the first number entry after operator loading, and take the number
+//    else take number entry as usual
+
+// if equal is clicked (and there is a number in stash and operator is loaded)
+//    apply the loaded operator on the stashed number and screen number
+//    then update the display
+//    clear the operator
+
+// if operator +,-,/,* clicked (and there is a number in stash and operator is loaded)
+//    apply the loaded operator on the stashed number and screen number
+//    then update the display
+//    update the operator function
+//    set lastNum equal to current result 
