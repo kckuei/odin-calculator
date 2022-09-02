@@ -70,8 +70,11 @@ function clickedPercent() {
 }
 
 function clickedNumber(e, txt) {
-    if (clearScreenOnNextNumberSelection) display.innerText = '';
-    
+    if (clearScreenOnNextNumberSelection) {
+        display.innerText = '';
+        clearScreenOnNextNumberSelection = false;
+    }
+
     if (e.target.id === 'decimal' && decimalExists()) return;
     if (e.target.id >= 0 && isFirstEntry()) display.innerText = '';
     display.innerText += txt;
