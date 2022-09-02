@@ -25,12 +25,12 @@ let currentOperator = null;
 let clearScreenOnNextNumberSelection = false;
 
 window.onclick = (e) => explode(e);
-allClearBtn.onclick = () => clickedAllClear();
 addBtn.onclick = (e) => clickedOperator(e, add);
 divideBtn.onclick = (e) => clickedOperator(e, divide);
 multiplyBtn.onclick = (e) => clickedOperator(e, multiply);
 subtractBtn.onclick = (e) => clickedOperator(e, subtract);
 
+allClearBtn.onclick = () => clickedAllClear();
 plusMinusBtn.onclick = () => clickedPlusMinus();
 percentBtn.onclick = () => clickedPercent();
 equalBtn.onclick = () => clickedEqual();
