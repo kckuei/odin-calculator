@@ -24,7 +24,6 @@ let lastNum = display.innerText;
 let currentOperator = null;
 let clearScreenOnNextNumberSelection = false;
 
-window.onclick = (e) => explode(e);
 addBtn.onclick = (e) => clickedOperator(e, add);
 divideBtn.onclick = (e) => clickedOperator(e, divide);
 multiplyBtn.onclick = (e) => clickedOperator(e, multiply);
@@ -111,64 +110,67 @@ function isFirstEntry() {
     return (display.innerText === '0');
 }
 
+function plusOrMinus() {
+    return Math.random() < 0.5 ? -1 : 1;
+}
 
-
-
+let styleCount = 0;
 function createExplodingStyle() {
 
+    let x = plusOrMinus() * Math.random()*500;
+    let y = plusOrMinus() * Math.random()*500;
+    let rot = Math.random()*500;
+    let rot_res = Math.random()*360;
+    let duration = Math.random()*1.5;
+    let animation1 = `explode-${styleCount}-1`;
+    let animation2 = `explode-${styleCount}-2`;
+    let className = `explode-${styleCount}`;
+    styleCount ++;
+
     let style = document.createElement('style');
-    style.innerHTML = `.button-explode {
-        animation-duration: 1s;
-        animation-name: explode;
+    style.innerHTML = `.${className} {
+        animation-duration: ${duration}s;
+        animation-name: ${animation1}, ${animation2};
         animation-iteration-count: 1;
         animation-direction: normal;
-        transform: translate(30px, 50px) rotate(20deg);
+        transform: translate(${x}px, ${y}px) rotate(${rot_res}deg);
     }`;
     document.getElementsByTagName('head')[0].appendChild(style);
     
     
     let cssAnimation = document.createElement('style');
-    let rules = document.createTextNode('@-webkit-keyframes explode {'+
-    '0% { transform: translate(0px, 0px) rotate(0); }'+
-    '100% { transform: translate(100px, 50px) rotate(380deg); }'+
-    '}');
+    let rules = document.createTextNode(`@-webkit-keyframes ${animation1} {
+        0% { transform: translate(0px, 0px) rotate(0); }
+        100% { transform: translate(${x}px, ${y}px) rotate(${rot + rot_res}deg); }
+    }`);
     cssAnimation.appendChild(rules);
     document.getElementsByTagName("head")[0].appendChild(cssAnimation);
 
+    cssAnimation2 = document.createElement('style');
+    rules2 = document.createTextNode(`@-webkit-keyframes ${animation2} {
+        0% { transform: translate(0px, 0px) rotate(0); }
+        100% { transform: translate(${x}px, ${y}px) rotate(${rot + rot_res}deg); }
+    }`);
+    cssAnimation.appendChild(rules2);
+    document.getElementsByTagName("head")[0].appendChild(cssAnimation2);
+    return className;
 }
-
-
-let style = document.createElement('style');
-style.innerHTML = `.button-explode {
-    animation-duration: 1s;
-    animation-name: explode;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    transform: translate(30px, 50px) rotate(20deg);
-}`;
-document.getElementsByTagName('head')[0].appendChild(style);
-
-
-let cssAnimation = document.createElement('style');
-let rules = document.createTextNode('@-webkit-keyframes explode {'+
-'0% { transform: translate(0px, 0px) rotate(0); }'+
-'100% { transform: translate(100px, 50px) rotate(380deg); }'+
-'}');
-cssAnimation.appendChild(rules);
-document.getElementsByTagName("head")[0].appendChild(cssAnimation);
 
 
 let explodeCounter = 0;
 function explode(e) {
-    let classes = Array.from(e.target.classList)
-
-    // placeholder for future exploding fun
-    if (e.target.id === '0') explodeCounter++;
-    if (explodeCounter > 5 ) {
-
+    explodeCounter++;
+    if (explodeCounter === 5 ) {
         let buttons = [allClearBtn, plusMinusBtn, percentBtn, divideBtn, multiplyBtn, subtractBtn, addBtn,
             decimalBtn, equalBtn, zeroBtn, oneBtn, twoBtn, threeBtn, fourBtn, fiveBtn, sixBtn, sevenBtn, eightBtn, nineBtn]
-        buttons.forEach(button=>button.classList.add('button-explode'))
+        buttons.forEach(button=>{
+            let className = createExplodingStyle();
+            button.classList.add(className)
+        })
     }
 }
 
+window.onclick = (e) => explode(e);
+window.onload = () => {
+    // timer to check click rate
+    }
