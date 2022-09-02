@@ -1,3 +1,6 @@
+const DEFAULT_DISPLAY_SIZE = '4rem';
+const MAX_DISPLAY_DIGITS = 11;
+
 const display = document.getElementById('display')
 const allClearBtn = document.getElementById('ac')
 const plusMinusBtn = document.getElementById('plusminus')
@@ -68,38 +71,52 @@ function clickedAllClear () {
     currentOperator = null;
 }
 
-function clickedPlusMinus() {
-    let current = display.innerText; 
-    if (current.indexOf('-') < 0) display.innerText = '-' + display.innerText;
-    else display.innerText = current.slice(1);
+function getDisplayDigits() {
+    return display.innerText.length;
 }
 
-function clickedPercent() {
+function resizeDisplay(val) {
+    if (val.toString().length > MAX_DISPLAY_DIGITS) {
+        display.style.fontSize = '2rem';
+    } else {
+        display.style.fontSize = DEFAULT_DISPLAY_SIZE;
+    }
+}
+
+function render(val) {
+    resizeDisplay(val);
+    display.innerText = val;
+}
+
+function clickedPlusMinus() {
+    let current = display.innerText; 
+    if (current.indexOf('-') < 0) render('-' + display.innerText);
+    else render(current.slice(1));
 }
 
 function clickedNumber(e, txt) {
     if (clearScreenOnNextNumberSelection) {
-        display.innerText = '';
+        render('');
         clearScreenOnNextNumberSelection = false;
     }
 
     if (e.target.id === 'decimal' && decimalExists()) return;
-    if (e.target.id >= 0 && isFirstEntry()) display.innerText = '';
-    display.innerText += txt;
+    if (e.target.id >= 0 && isFirstEntry()) render('');
+    render(display.innerText + txt);
 }
 
 function clickedOperator(e, operator) {
     if (lastNum && currentOperator) {
         let num1 = +lastNum;
         let num2 = +display.innerText;
-        display.innerText = currentOperator(num1, num2);
+        render(currentOperator(num1, num2));
     }
     currentOperator = operator;
     lastNum = +display.innerText;
     clearScreenOnNextNumberSelection = true;
 
     if (e.target.id === 'percent') {
-        display.innerText = currentOperator(+display.innerText);
+        render(currentOperator(+display.innerText));
     }
 }
 
@@ -107,7 +124,7 @@ function clickedEqual() {
     if (lastNum) {
         let num1 = +lastNum;
         let num2 = +display.innerText;
-        display.innerText = currentOperator(num1, num2);
+        render(currentOperator(num1, num2));
         lastNum = null;
     }
 }

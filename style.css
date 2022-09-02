@@ -33,6 +33,7 @@ body, html {
     align-items: center;
     background-color: lightgrey;
     font-size: 4rem;
+    flex-wrap: wrap;
 }
 
 #logo {
