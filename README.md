@@ -1,4 +1,4 @@
-# odin-calculator
+# odin-exploding-calculator
 Toy calculator using vanilla `Javascript`, `HTML`, and `CSS`. Live demo [here](https://kckuei.github.io/odin-calculator/)! It's a cheap calculator, so don't *click* on it too fast or it may overheat...
 
 ![Sample](./images/sample.png)
