@@ -1,5 +1,5 @@
 # odin-calculator
-Toy calculator using vanilla `Javascript`, `html`, and `CSS`. Live demo [here](#)!
+Toy calculator using vanilla `Javascript`, `html`, and `CSS`. Live demo [here](#)! It's a cheap calcualtor, so don't click too fast...
 
 ![Sample](./images/sample.png)
 

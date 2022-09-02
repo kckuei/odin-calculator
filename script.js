@@ -111,6 +111,53 @@ function isFirstEntry() {
     return (display.innerText === '0');
 }
 
+
+
+
+function createExplodingStyle() {
+
+    let style = document.createElement('style');
+    style.innerHTML = `.button-explode {
+        animation-duration: 1s;
+        animation-name: explode;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+        transform: translate(30px, 50px) rotate(20deg);
+    }`;
+    document.getElementsByTagName('head')[0].appendChild(style);
+    
+    
+    let cssAnimation = document.createElement('style');
+    let rules = document.createTextNode('@-webkit-keyframes explode {'+
+    '0% { transform: translate(0px, 0px) rotate(0); }'+
+    '100% { transform: translate(100px, 50px) rotate(380deg); }'+
+    '}');
+    cssAnimation.appendChild(rules);
+    document.getElementsByTagName("head")[0].appendChild(cssAnimation);
+
+}
+
+
+let style = document.createElement('style');
+style.innerHTML = `.button-explode {
+    animation-duration: 1s;
+    animation-name: explode;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    transform: translate(30px, 50px) rotate(20deg);
+}`;
+document.getElementsByTagName('head')[0].appendChild(style);
+
+
+let cssAnimation = document.createElement('style');
+let rules = document.createTextNode('@-webkit-keyframes explode {'+
+'0% { transform: translate(0px, 0px) rotate(0); }'+
+'100% { transform: translate(100px, 50px) rotate(380deg); }'+
+'}');
+cssAnimation.appendChild(rules);
+document.getElementsByTagName("head")[0].appendChild(cssAnimation);
+
+
 let explodeCounter = 0;
 function explode(e) {
     let classes = Array.from(e.target.classList)
@@ -118,6 +165,10 @@ function explode(e) {
     // placeholder for future exploding fun
     if (e.target.id === '0') explodeCounter++;
     if (explodeCounter > 5 ) {
-        zeroBtn.classList.add('button-explode')
+
+        let buttons = [allClearBtn, plusMinusBtn, percentBtn, divideBtn, multiplyBtn, subtractBtn, addBtn,
+            decimalBtn, equalBtn, zeroBtn, oneBtn, twoBtn, threeBtn, fourBtn, fiveBtn, sixBtn, sevenBtn, eightBtn, nineBtn]
+        buttons.forEach(button=>button.classList.add('button-explode'))
     }
 }
+

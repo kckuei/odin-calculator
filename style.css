@@ -101,36 +101,3 @@ img {
 #equal:active {
     background-color: rgb(37, 66, 66)
 }
-
-.button-explode {
-    animation-duration: 1s;
-    animation-name: explode, rotate;
-    animation-iteration-count: 1;
-    animation-direction: normal;
-    transform: translate(30px, 20px) rotate(20deg);
-}
-
-@keyframes explode {
-from {
-    margin-right: 100%;
-    /* width: 100%; */
-}
-
-to {
-    margin-right: 0%;
-    /* width: 100%; */
-}
-}
-
-@keyframes rotate {
-0% {
-    transform: translate(0px, 0px) rotate(0);
-}
-100% {
-    transform: translate(30px, 20px) rotate(380deg);
-}
-}
-
-/* * {
-    border: solid 1px red;
-} */
