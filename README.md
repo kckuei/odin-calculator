@@ -4,7 +4,7 @@ Toy calculator using vanilla `Javascript`, `html`, and `CSS`. Live demo [here](#
 ![Sample](./images/sample.png = 250px)
 
 What happens when your calculator overheats!
-![Sample Exploded](./images/sample-exploded.png = 250px)
+![Sample Exploded](./images/sample-exploded.png = 250x)
 
 ### Psuedocode
 The psuedo roughly goes as follows:
