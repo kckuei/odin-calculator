@@ -81,6 +81,11 @@ function clickedNumber(e, txt) {
 }
 
 function clickedOperator(e, operator) {
+    if (lastNum && currentOperator) {
+        let num1 = +lastNum;
+        let num2 = +display.innerText;
+        display.innerText = currentOperator(num1, num2)
+    }
     currentOperator = operator;
     lastNum = +display.innerText;
     clearScreenOnNextNumberSelection = true;
