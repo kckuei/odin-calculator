@@ -29,10 +29,10 @@ addBtn.onclick = (e) => clickedOperator(e, add);
 divideBtn.onclick = (e) => clickedOperator(e, divide);
 multiplyBtn.onclick = (e) => clickedOperator(e, multiply);
 subtractBtn.onclick = (e) => clickedOperator(e, subtract);
+percentBtn.onclick = (e) => clickedOperator(e, percent);
 
 allClearBtn.onclick = () => clickedAllClear();
 plusMinusBtn.onclick = () => clickedPlusMinus();
-percentBtn.onclick = () => clickedPercent();
 equalBtn.onclick = () => clickedEqual();
 
 zeroBtn.onclick = (e) => clickedNumber(e,0);
@@ -66,7 +66,6 @@ function clickedPlusMinus() {
 }
 
 function clickedPercent() {
-
 }
 
 function clickedNumber(e, txt) {
@@ -84,25 +83,24 @@ function clickedOperator(e, operator) {
     if (lastNum && currentOperator) {
         let num1 = +lastNum;
         let num2 = +display.innerText;
-        display.innerText = currentOperator(num1, num2)
+        display.innerText = currentOperator(num1, num2);
     }
     currentOperator = operator;
     lastNum = +display.innerText;
     clearScreenOnNextNumberSelection = true;
+
+    if (e.target.id === 'percent') {
+        display.innerText = currentOperator(+display.innerText);
+    }
 }
 
 function clickedEqual() {
     if (lastNum) {
         let num1 = +lastNum;
         let num2 = +display.innerText;
-        display.innerText = currentOperator(num1, num2)
+        display.innerText = currentOperator(num1, num2);
         lastNum = null;
     }
-}
-
-function main(e) {
-
-
 }
 
 function decimalExists() {
@@ -112,8 +110,6 @@ function decimalExists() {
 function isFirstEntry() {
     return (display.innerText === '0');
 }
-
-
 
 let explodeCounter = 0;
 function explode(e) {
