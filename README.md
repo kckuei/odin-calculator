@@ -1,5 +1,7 @@
 # odin-calculator
-Toy calculator using vanilla `Javascript`, `html`, and `CSS`. 
+Toy calculator using vanilla `Javascript`, `html`, and `CSS`. Live demo [here](#)!
+
+![Sample](./images/sample.png)
 
 ### Psuedocode
 The psuedo roughly goes as follows:
