@@ -1,10 +1,10 @@
 # odin-calculator
 Toy calculator using vanilla `Javascript`, `HTML`, and `CSS`. Live demo [here](#)! It's a cheap calculator, so don't click too fast or it may overheat...
 
-<img src="./images/sample.png" height="250" alt=sample>
+<img src="./images/sample.png" height="400" alt=sample display='block'>
 
 What happens when your calculator overheats!
-<img src="./images/sample-exploded.png" height="250" alt=sample-exploded>
+<img src="./images/sample-exploded.png" height="400" alt=sample-exploded display='block'>
 
 ### Psuedocode
 The psuedo roughly goes as follows:
