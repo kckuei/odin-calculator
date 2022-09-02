@@ -1,5 +1,5 @@
 # odin-calculator
-Toy calculator using vanilla `Javascript`, `HTML`, and `CSS`. Live demo [here](kckuei.github.io/odin-calculator/)! It's a cheap calculator, so don't *click* too fast or it may overheat...
+Toy calculator using vanilla `Javascript`, `HTML`, and `CSS`. Live demo [here](https://kckuei.github.io/odin-calculator/)! It's a cheap calculator, so don't *click* too fast or it may overheat...
 
 ![Sample](./images/sample.png)
 
