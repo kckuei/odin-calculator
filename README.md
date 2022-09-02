@@ -3,6 +3,9 @@ Toy calculator using vanilla `Javascript`, `html`, and `CSS`. Live demo [here](#
 
 ![Sample](./images/sample.png)
 
+What happens when your calculator overheats!
+![Sample Exploded](./images/sample-exploded.png)
+
 ### Psuedocode
 The psuedo roughly goes as follows:
 1. If a `number` (0-9) is clicked when there is a number in the stash and a operator is loaded
