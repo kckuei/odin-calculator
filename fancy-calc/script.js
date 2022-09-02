@@ -185,19 +185,33 @@ function findOperators(str) {
 // evaluate, and substitute
 
 let str = '1^3×2^12232(3)232^0123456789-3×2÷4';
+let operatorIndices = findOperators(str);
 
 let index =  str.indexOf('^');
-let count =0;
+let count = 0;
 while(index) {
-
-    console.log(index)
-
     index =  str.indexOf('^');
+    
+
+    
 
     count ++;
     if (count > 20) break;
 }
 
+let pos = operatorIndices.findIndex((num) => {
+    return num > index;
+});
+rightIndex = operatorIndices[pos] || str.length-1 
+
+pos = operatorIndices.findIndex((num) => {
+    return num < index;
+});
+leftIndex = operatorIndices[pos] || 0
+
+
+left = str.slice(leftIndex,index)
+right = str.slice(index+1, rightIndex)
 
 
 window.onload = () => {
