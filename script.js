@@ -1,5 +1,5 @@
 const display = document.getElementById('display')
-const acBallClearBtn = document.getElementById('ac')
+const allClearBtn = document.getElementById('ac')
 const plusMinusBtn = document.getElementById('plusminus')
 const percentBtn = document.getElementById('percent')
 const divideBtn = document.getElementById('divide')
@@ -24,12 +24,25 @@ let lastNum = display.innerText;
 let currentOperator = null;
 let counter = 0;
 
-window.onclick = (e) => updateDisplay(e);
-acBallClearBtn.onclick = () => clickedAllClear();
+// window.onclick = (e) => updateDisplay(e);
+allClearBtn.onclick = () => clickedAllClear();
 addBtn.onclick = () => setOperator(add);
 divideBtn.onclick = () => setOperator(divide);
 multiplyBtn.onclick = () => setOperator(multiply);
 subtractBtn.onclick = () => setOperator(subtract);
+equalBtn
+
+zeroBtn.onclick = (e) => updateDisplay(e,0);
+oneBtn.onclick = (e) => updateDisplay(e,1);
+twoBtn.onclick = (e) => updateDisplay(e,2);
+threeBtn.onclick = (e) => updateDisplay(e,3);
+fourBtn.onclick = (e) => updateDisplay(e,4);
+fiveBtn.onclick = (e) => updateDisplay(e,5);
+sixBtn.onclick = (e) => updateDisplay(e,6);
+sevenBtn.onclick = (e) => updateDisplay(e,7);
+eightBtn.onclick = (e) => updateDisplay(e,8);
+nineBtn.onclick = (e) => updateDisplay(e,9);
+decimalBtn.onclick = (e) => updateDisplay(e,'.');
 
 const multiply = (num1, num2) => {return +num1 * +num2}
 const divide = (num1, num2) => {return +num1 / +num2}
@@ -42,6 +55,19 @@ function clickedAllClear () {
     currentOperator = null;
 }
 
+function updateDisplay(e, txt) {
+
+    if (e.target.id === 'decimal') {
+        if (decimalExists()) return;
+    }
+
+    if (e.target.id >= 0) {
+        if (isFirstEntry()) display.innerText = '';
+    }
+
+    display.innerText += txt;
+}
+
 function stash() {
     lastNum = display.innerText
 }
@@ -50,34 +76,36 @@ function setOperator(operator) {
     currentOperator = operator;
 }
 
-
-function updateDisplay(e) {
-    // console.log(e.target)
-    // console.log(e.target.id)
-
-    let classes = Array.from(e.target.classList)
-
-    if (classes.indexOf('number') > 0 && e.target.id !== 'ac' && display.innerText === '0') display.innerText = '';
-    if (e.target.id === '0') display.innerText += '0';
-    if (e.target.id === '1') display.innerText += '1';
-    if (e.target.id === '2') display.innerText += '2';
-    if (e.target.id === '3') display.innerText += '3';
-    if (e.target.id === '4') display.innerText += '4';
-    if (e.target.id === '5') display.innerText += '5';
-    if (e.target.id === '6') display.innerText += '6';
-    if (e.target.id === '7') display.innerText += '7';
-    if (e.target.id === '8') display.innerText += '8';
-    if (e.target.id === '9') display.innerText += '9';
-    if ((e.target.id === 'decimal') && (display.innerText.indexOf('.')<0)) {
-        display.innerText += '.';
-    }
-
-    // placeholder for future exploding fun
-    if (e.target.id === '0') counter++;
-    if (counter > 5 ) {
-        zeroBtn.classList.add('button-explode')
-    }
+function decimalExists() {
+    return (display.innerText.indexOf('.') > 0);
 }
+
+function isFirstEntry() {
+    return (display.innerText === '0');
+}
+
+
+
+
+
+
+
+
+
+
+
+// function updateDisplay(e) {
+//     // console.log(e.target)
+//     // console.log(e.target.id)
+
+//     let classes = Array.from(e.target.classList)
+
+//     // placeholder for future exploding fun
+//     if (e.target.id === '0') counter++;
+//     if (counter > 5 ) {
+//         zeroBtn.classList.add('button-explode')
+//     }
+// }
 
 
 
