@@ -1,32 +1,35 @@
 const DEFAULT_DISPLAY_SIZE = '4rem';
 const MAX_DISPLAY_DIGITS = 11;
+const EXPLODE_ON = 10;
 
-const display = document.getElementById('display')
-const allClearBtn = document.getElementById('ac')
-const plusMinusBtn = document.getElementById('plusminus')
-const percentBtn = document.getElementById('percent')
-const divideBtn = document.getElementById('divide')
-const multiplyBtn = document.getElementById('multiply')
-const subtractBtn = document.getElementById('subtract')
-const addBtn = document.getElementById('add')
-const decimalBtn = document.getElementById('decimal')
-const equalBtn = document.getElementById('equal')
+const display = document.getElementById('display');
+const allClearBtn = document.getElementById('ac');
+const plusMinusBtn = document.getElementById('plusminus');
+const percentBtn = document.getElementById('percent');
+const divideBtn = document.getElementById('divide');
+const multiplyBtn = document.getElementById('multiply');
+const subtractBtn = document.getElementById('subtract');
+const addBtn = document.getElementById('add');
+const decimalBtn = document.getElementById('decimal');
+const equalBtn = document.getElementById('equal');
 
-const zeroBtn = document.getElementById('0')
-const oneBtn = document.getElementById('1')
-const twoBtn = document.getElementById('2')
-const threeBtn = document.getElementById('3')
-const fourBtn = document.getElementById('4')
-const fiveBtn = document.getElementById('5')
-const sixBtn = document.getElementById('6')
-const sevenBtn = document.getElementById('7')
-const eightBtn = document.getElementById('8')
-const nineBtn = document.getElementById('9')
+const zeroBtn = document.getElementById('0');
+const oneBtn = document.getElementById('1');
+const twoBtn = document.getElementById('2');
+const threeBtn = document.getElementById('3');
+const fourBtn = document.getElementById('4');
+const fiveBtn = document.getElementById('5');
+const sixBtn = document.getElementById('6');
+const sevenBtn = document.getElementById('7');
+const eightBtn = document.getElementById('8');
+const nineBtn = document.getElementById('9');
+
+const operatorBtns = document.querySelectorAll('.operator');
 
 let allButtons = [allClearBtn, plusMinusBtn, percentBtn, divideBtn, 
     multiplyBtn, subtractBtn, addBtn, decimalBtn, equalBtn, zeroBtn, 
     oneBtn, twoBtn, threeBtn, fourBtn, fiveBtn, sixBtn, sevenBtn, 
-    eightBtn, nineBtn]
+    eightBtn, nineBtn];
 
 let number1 = display.innerText;
 let number2 = null;
@@ -35,10 +38,10 @@ let clearScreenOnNextNumberSelection = false;
 
 let styleCount = 0;
 let explodeCounter = 0;
-let explodeOn = 10
 let exploded = false;
 
 window.addEventListener('keydown', clickedHotKey);
+window.addEventListener('keydown', explodeCalculator);
 window.addEventListener('click', explodeCalculator);
 window.addEventListener('click', incrementCounter)
 window.onload = ()=> setTimeout(resetCounter, 2000);
@@ -53,17 +56,17 @@ allClearBtn.onclick = () => clickedAllClear();
 plusMinusBtn.onclick = () => clickedPlusMinus();
 equalBtn.onclick = () => clickedEqual();
 
-zeroBtn.onclick = (e) => clickedNumber(e.target.id,0);
-oneBtn.onclick = (e) => clickedNumber(e.target.id,1);
-twoBtn.onclick = (e) => clickedNumber(e.target.id,2);
-threeBtn.onclick = (e) => clickedNumber(e.target.id,3);
-fourBtn.onclick = (e) => clickedNumber(e.target.id,4);
-fiveBtn.onclick = (e) => clickedNumber(e.target.id,5);
-sixBtn.onclick = (e) => clickedNumber(e.target.id,6);
-sevenBtn.onclick = (e) => clickedNumber(e.target.id,7);
-eightBtn.onclick = (e) => clickedNumber(e.target.id,8);
-nineBtn.onclick = (e) => clickedNumber(e.target.id,9);
-decimalBtn.onclick = (e) => clickedNumber(e.target.id,'.');
+zeroBtn.onclick = (e) => clickedNumber(e.target.id, 0);
+oneBtn.onclick = (e) => clickedNumber(e.target.id, 1);
+twoBtn.onclick = (e) => clickedNumber(e.target.id, 2);
+threeBtn.onclick = (e) => clickedNumber(e.target.id, 3);
+fourBtn.onclick = (e) => clickedNumber(e.target.id, 4);
+fiveBtn.onclick = (e) => clickedNumber(e.target.id, 5);
+sixBtn.onclick = (e) => clickedNumber(e.target.id, 6);
+sevenBtn.onclick = (e) => clickedNumber(e.target.id, 7);
+eightBtn.onclick = (e) => clickedNumber(e.target.id, 8);
+nineBtn.onclick = (e) => clickedNumber(e.target.id, 9);
+decimalBtn.onclick = (e) => clickedNumber(e.target.id, '.');
 
 const multiply = (num1, num2) => {return num1 * num2}
 const divide = (num1, num2) => {return num1 / num2}
@@ -76,6 +79,7 @@ function clickedAllClear () {
     number2 = null;
     currentOperator = null;
     render(number1);
+    clearToggleAll();
 }
 
 function resizeDisplayDigits(val) {
@@ -112,8 +116,22 @@ function clickedNumber(id, txt) {
     render(display.innerText + txt);
 }
 
+function clearToggleAll() {
+    operatorBtns.forEach(elem=>elem.classList.remove('operator-toggle'));
+}
+
+function toggleOperatorDown(id) {
+    clearToggleAll();
+    if (id == 'multiply') multiplyBtn.classList.add('operator-toggle')
+    if (id == 'add') addBtn.classList.add('operator-toggle')
+    if (id == 'subtract') subtractBtn.classList.add('operator-toggle')
+    if (id == 'divide') divideBtn.classList.add('operator-toggle')
+}
+
 function clickedOperator(id, operator) {
     if (operator === currentOperator && !numLoaded(number2)) return
+
+    toggleOperatorDown(id);
 
     if (numLoaded(number1) && currentOperator) {
         number2 = +display.innerText
@@ -192,7 +210,7 @@ function createExplodingStyle() {
 }
 
 function explodeCalculator(e) {
-    if (explodeCounter === explodeOn && !exploded) {
+    if (!exploded && explodeCounter >= EXPLODE_ON) {
         allButtons.forEach(button=>{
             let className = createExplodingStyle();
             button.classList.add(className);
@@ -237,4 +255,6 @@ function clickedHotKey(e) {
     if (e.key === '%') clickedOperator('percent', percent)
     if (e.key === '=') clickedEqual()
     if (e.key === 'c') clickedAllClear()
+    explodeCounter++
+    console.log(explodeCounter)
 }
