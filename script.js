@@ -23,7 +23,13 @@ const sevenBtn = document.getElementById('7')
 const eightBtn = document.getElementById('8')
 const nineBtn = document.getElementById('9')
 
-let lastNum = display.innerText;
+let allButtons = [allClearBtn, plusMinusBtn, percentBtn, divideBtn, 
+    multiplyBtn, subtractBtn, addBtn, decimalBtn, equalBtn, zeroBtn, 
+    oneBtn, twoBtn, threeBtn, fourBtn, fiveBtn, sixBtn, sevenBtn, 
+    eightBtn, nineBtn]
+
+let number1 = display.innerText;
+let number2 = null;
 let currentOperator = null;
 let clearScreenOnNextNumberSelection = false;
 
@@ -37,45 +43,42 @@ window.addEventListener('click', explodeCalculator);
 window.addEventListener('click', incrementCounter)
 window.onload = ()=> setTimeout(resetCounter, 2000);
 
-addBtn.onclick = (e) => clickedOperator(e, add);
-divideBtn.onclick = (e) => clickedOperator(e, divide);
-multiplyBtn.onclick = (e) => clickedOperator(e, multiply);
-subtractBtn.onclick = (e) => clickedOperator(e, subtract);
-percentBtn.onclick = (e) => clickedOperator(e, percent);
+addBtn.onclick = (e) => clickedOperator(e.target.id, add);
+divideBtn.onclick = (e) => clickedOperator(e.target.id, divide);
+multiplyBtn.onclick = (e) => clickedOperator(e.target.id, multiply);
+subtractBtn.onclick = (e) => clickedOperator(e.target.id, subtract);
+percentBtn.onclick = (e) => clickedOperator(e.target.id, percent);
 
 allClearBtn.onclick = () => clickedAllClear();
 plusMinusBtn.onclick = () => clickedPlusMinus();
 equalBtn.onclick = () => clickedEqual();
 
-zeroBtn.onclick = (e) => clickedNumber(e,0);
-oneBtn.onclick = (e) => clickedNumber(e,1);
-twoBtn.onclick = (e) => clickedNumber(e,2);
-threeBtn.onclick = (e) => clickedNumber(e,3);
-fourBtn.onclick = (e) => clickedNumber(e,4);
-fiveBtn.onclick = (e) => clickedNumber(e,5);
-sixBtn.onclick = (e) => clickedNumber(e,6);
-sevenBtn.onclick = (e) => clickedNumber(e,7);
-eightBtn.onclick = (e) => clickedNumber(e,8);
-nineBtn.onclick = (e) => clickedNumber(e,9);
-decimalBtn.onclick = (e) => clickedNumber(e,'.');
+zeroBtn.onclick = (e) => clickedNumber(e.target.id,0);
+oneBtn.onclick = (e) => clickedNumber(e.target.id,1);
+twoBtn.onclick = (e) => clickedNumber(e.target.id,2);
+threeBtn.onclick = (e) => clickedNumber(e.target.id,3);
+fourBtn.onclick = (e) => clickedNumber(e.target.id,4);
+fiveBtn.onclick = (e) => clickedNumber(e.target.id,5);
+sixBtn.onclick = (e) => clickedNumber(e.target.id,6);
+sevenBtn.onclick = (e) => clickedNumber(e.target.id,7);
+eightBtn.onclick = (e) => clickedNumber(e.target.id,8);
+nineBtn.onclick = (e) => clickedNumber(e.target.id,9);
+decimalBtn.onclick = (e) => clickedNumber(e.target.id,'.');
 
-const multiply = (num1, num2) => {return +num1 * +num2}
-const divide = (num1, num2) => {return +num1 / +num2}
-const add = (num1, num2) => {return +num1 + +num2}
-const subtract = (num1, num2) => {return +num1 - +num2}
-const percent = (num) => {return +num/100}
+const multiply = (num1, num2) => {return num1 * num2}
+const divide = (num1, num2) => {return num1 / num2}
+const add = (num1, num2) => {return num1 + num2}
+const subtract = (num1, num2) => {return num1 - num2}
+const percent = (num) => {return num/100}
 
 function clickedAllClear () {
-    lastNum = 0;
-    display.innerText = lastNum;
+    number1 = 0;
+    number2 = null;
     currentOperator = null;
+    render(number1);
 }
 
-function getDisplayDigits() {
-    return display.innerText.length;
-}
-
-function resizeDisplay(val) {
+function resizeDisplayDigits(val) {
     if (val.toString().length > MAX_DISPLAY_DIGITS) {
         display.style.fontSize = '2rem';
     } else {
@@ -84,7 +87,7 @@ function resizeDisplay(val) {
 }
 
 function render(val) {
-    resizeDisplay(val);
+    resizeDisplayDigits(val);
     display.innerText = val;
 }
 
@@ -94,41 +97,54 @@ function clickedPlusMinus() {
     else render(current.slice(1));
 }
 
-function clickedNumber(e, txt) {
+function clickedNumber(id, txt) {
     if (clearScreenOnNextNumberSelection) {
         render('');
         clearScreenOnNextNumberSelection = false;
     }
 
-    if (e.target.id === 'decimal' && decimalExists()) return;
-    if (e.target.id >= 0 && isFirstEntry()) render('');
+    if (id === 'decimal' && decimalExists()) return;
+    if (id >= 0 && isFirstEntry()) render('');
+
+    if (numLoaded(number1) && currentOperator) {
+        number2 = +(display.innerText + txt);
+    }
     render(display.innerText + txt);
 }
 
-function clickedOperator(e, operator) {
+function clickedOperator(id, operator) {
+    if (operator === currentOperator && !numLoaded(number2)) return
 
-    if (lastNum && currentOperator) {
-        let num1 = +lastNum;
-        let num2 = +display.innerText;
-        console.log(num1)
-        console.log(num2)
-        render(currentOperator(num1, num2));
+    if (numLoaded(number1) && currentOperator) {
+        number2 = +display.innerText
+        render(currentOperator(+number1, +number2));
     }
+
     currentOperator = operator;
-    lastNum = +display.innerText;
+    number1 = +display.innerText;
     clearScreenOnNextNumberSelection = true;
 
-    if (e.target.id === 'percent') {
+    if (id === 'percent') {
         render(currentOperator(+display.innerText));
     }
 }
 
 function clickedEqual() {
-    if (lastNum) {
-        let num2 = +lastNum;
-        let num1 = +display.innerText;
-        render(currentOperator(num1, num2));
+    if (numLoaded(number1) && currentOperator && numLoaded(number2)) {
+        let result = currentOperator(number1, number2)
+        number1 = result
+        render(result)
+    } else if (numLoaded(number1) && currentOperator) {
+        let result = currentOperator(number1,number1)
+        number2 = number1
+        number1 = result
+        render(result)
     }
+}
+
+function numLoaded(num) {
+    if (num !== null && num.toString().length > 0) return true;
+    return false;
 }
 
 function decimalExists() {
@@ -177,9 +193,7 @@ function createExplodingStyle() {
 
 function explodeCalculator(e) {
     if (explodeCounter === explodeOn && !exploded) {
-        let buttons = [allClearBtn, plusMinusBtn, percentBtn, divideBtn, multiplyBtn, subtractBtn, addBtn,
-            decimalBtn, equalBtn, zeroBtn, oneBtn, twoBtn, threeBtn, fourBtn, fiveBtn, sixBtn, sevenBtn, eightBtn, nineBtn]
-        buttons.forEach(button=>{
+        allButtons.forEach(button=>{
             let className = createExplodingStyle();
             button.classList.add(className);
         })
@@ -203,3 +217,7 @@ function resetCounter() {
     explodeCounter = 0;
     setTimeout(resetCounter, 2000)
 }
+
+
+
+
