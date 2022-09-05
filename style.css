@@ -28,11 +28,11 @@ body, html {
     margin-top: auto;
     margin-bottom: auto;
     border: solid 4px black;
-    display: flex;
-    justify-content: flex-end;
     align-items: center;
     background-color: lightgrey;
     font-size: 4rem;
+    display: flex;
+    justify-content: flex-end;
     flex-wrap: wrap;
 }
 
@@ -75,6 +75,10 @@ img {
     align-items: center;
 }
 
+.button-down {
+    background-color: rgb(6, 77, 65);
+}
+
 .button:active {
     background-color: rgb(6, 77, 65);
 }
@@ -95,12 +99,20 @@ img {
     background-color: rgb(181, 219, 242);
 }
 
+.special-down {
+    background-color: rgb(63, 155, 212);
+}
+
 .special:active {
     background-color: rgb(63, 155, 212);
 }
 
 .equal {
     background-color: darkslategrey
+}
+
+.equal-down {
+    background-color: rgb(37, 66, 66)
 }
 
 .equal:active {

@@ -1,4 +1,4 @@
-const DEFAULT_DISPLAY_SIZE = '4rem';
+const DEFAULT_DISPLAY_SIZE_REM = 4;
 const MAX_DISPLAY_DIGITS = 11;
 const EXPLODE_ON = 10;
 
@@ -83,10 +83,12 @@ function clickedAllClear () {
 }
 
 function resizeDisplayDigits(val) {
+    // display width in pixels = 16 * DEFAULT_DISPLAY_SIZE_REM * MAX_DISPLAY_DIGITS 
     if (val.toString().length > MAX_DISPLAY_DIGITS) {
-        display.style.fontSize = '2rem';
+        let newSizeRem = (MAX_DISPLAY_DIGITS / val.toString().length) * DEFAULT_DISPLAY_SIZE_REM
+        display.style.fontSize = newSizeRem + 'rem';
     } else {
-        display.style.fontSize = DEFAULT_DISPLAY_SIZE;
+        display.style.fontSize = DEFAULT_DISPLAY_SIZE_REM + 'rem';
     }
 }
 
@@ -149,14 +151,14 @@ function clickedOperator(id, operator) {
 
 function clickedEqual() {
     if (numLoaded(number1) && currentOperator && numLoaded(number2)) {
-        let result = currentOperator(number1, number2)
-        number1 = result
-        render(result)
+        let result = currentOperator(number1, number2);
+        number1 = result;
+        render(result);
     } else if (numLoaded(number1) && currentOperator) {
-        let result = currentOperator(number1,number1)
-        number2 = number1
-        number1 = result
-        render(result)
+        let result = currentOperator(number1,number1);
+        number2 = number1;
+        number1 = result;
+        render(result);
     }
 }
 
@@ -233,28 +235,34 @@ function incrementCounter(e) {
 function resetCounter() {
     // resets the explosion counter every 2 seconds
     explodeCounter = 0;
-    setTimeout(resetCounter, 2000)
+    setTimeout(resetCounter, 2000);
+}
+
+function decorate(button, className, action) {
+    button.classList.add(className);
+    action();
+    setTimeout(()=>{button.classList.remove(className)}, 100);
 }
 
 function clickedHotKey(e) {
-    if (e.key === '0') clickedNumber('0', '0')
-    if (e.key === '1') clickedNumber('1', '1')
-    if (e.key === '2') clickedNumber('2', '2')
-    if (e.key === '3') clickedNumber('3', '3')
-    if (e.key === '4') clickedNumber('4', '4')
-    if (e.key === '5') clickedNumber('5', '5')
-    if (e.key === '6') clickedNumber('6', '6')
-    if (e.key === '7') clickedNumber('7', '7')
-    if (e.key === '8') clickedNumber('8', '8')
-    if (e.key === '9') clickedNumber('9', '9')
-    if (e.key === '.') clickedNumber('decimal', '.')
-    if (e.key === '+') clickedOperator('add', add)
-    if (e.key === '-') clickedOperator('subtract', subtract)
-    if (e.key === '/') clickedOperator('divide', divide)
-    if (e.key === '*') clickedOperator('multiply', multiply)
-    if (e.key === '%') clickedOperator('percent', percent)
-    if (e.key === '=') clickedEqual()
-    if (e.key === 'c') clickedAllClear()
-    explodeCounter++
-    console.log(explodeCounter)
+    if (e.key === '%') decorate(percentBtn, 'special-down', ()=>clickedOperator('percent', percent))
+    if (e.key === 'c') decorate(allClearBtn, 'special-down', ()=>clickedAllClear())
+    if (e.key === '=') decorate(equalBtn, 'equal-down', ()=>clickedEqual())
+    if (e.key === 'Enter') decorate(equalBtn, 'equal-down', ()=>clickedEqual())
+    if (e.key === '0') decorate(zeroBtn, 'button-down', ()=>clickedNumber('0','0'))
+    if (e.key === '1') decorate(oneBtn, 'button-down', ()=>clickedNumber('1','1'))
+    if (e.key === '2') decorate(twoBtn, 'button-down', ()=>clickedNumber('2','2'))
+    if (e.key === '3') decorate(threeBtn, 'button-down', ()=>clickedNumber('3','3'))
+    if (e.key === '4') decorate(fourBtn, 'button-down', ()=>clickedNumber('4','4'))
+    if (e.key === '5') decorate(fiveBtn, 'button-down', ()=>clickedNumber('5','5'))
+    if (e.key === '6') decorate(sixBtn, 'button-down', ()=>clickedNumber('6','6'))
+    if (e.key === '7') decorate(sevenBtn, 'button-down', ()=>clickedNumber('7','7'))
+    if (e.key === '8') decorate(eightBtn, 'button-down', ()=>clickedNumber('8','8'))
+    if (e.key === '9') decorate(nineBtn, 'button-down', ()=>clickedNumber('9','9'))
+    if (e.key === '.') decorate(decimalBtn, 'button-down', ()=>clickedNumber('decimal', '.'))
+    if (e.key === '+') clickedOperator('add', add);
+    if (e.key === '-') clickedOperator('subtract', subtract);
+    if (e.key === '/') clickedOperator('divide', divide);
+    if (e.key === '*') clickedOperator('multiply', multiply);
+    explodeCounter++;
 }
