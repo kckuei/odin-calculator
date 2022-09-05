@@ -79,26 +79,26 @@ img {
     background-color: rgb(6, 77, 65);
 }
 
-#divide, #multiply, #subtract, #add {
+.operator {
     background-color: rgb(217, 195, 71)
 }
 
-#divide:active, #multiply:active, #subtract:active, #add:active {
+.operator:active {
     background-color: rgb(154, 137, 38)
 }
 
-#ac, #plusminus, #percent {
+.special {
     background-color: rgb(181, 219, 242);
 }
 
-#ac:active, #plusminus:active, #percent:active {
+.special:active {
     background-color: rgb(63, 155, 212);
 }
 
-#equal {
+.equal {
     background-color: darkslategrey
 }
 
-#equal:active {
+.equal:active {
     background-color: rgb(37, 66, 66)
 }
