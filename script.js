@@ -106,9 +106,12 @@ function clickedNumber(e, txt) {
 }
 
 function clickedOperator(e, operator) {
+
     if (lastNum && currentOperator) {
         let num1 = +lastNum;
         let num2 = +display.innerText;
+        console.log(num1)
+        console.log(num2)
         render(currentOperator(num1, num2));
     }
     currentOperator = operator;
@@ -122,10 +125,9 @@ function clickedOperator(e, operator) {
 
 function clickedEqual() {
     if (lastNum) {
-        let num1 = +lastNum;
-        let num2 = +display.innerText;
+        let num2 = +lastNum;
+        let num1 = +display.innerText;
         render(currentOperator(num1, num2));
-        lastNum = null;
     }
 }
 
