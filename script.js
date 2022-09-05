@@ -34,11 +34,11 @@ let currentOperator = null;
 let clearScreenOnNextNumberSelection = false;
 
 let styleCount = 0;
-
 let explodeCounter = 0;
 let explodeOn = 10
 let exploded = false;
 
+window.addEventListener('keydown', clickedHotKey);
 window.addEventListener('click', explodeCalculator);
 window.addEventListener('click', incrementCounter)
 window.onload = ()=> setTimeout(resetCounter, 2000);
@@ -218,6 +218,23 @@ function resetCounter() {
     setTimeout(resetCounter, 2000)
 }
 
-
-
-
+function clickedHotKey(e) {
+    if (e.key === '0') clickedNumber('0', '0')
+    if (e.key === '1') clickedNumber('1', '1')
+    if (e.key === '2') clickedNumber('2', '2')
+    if (e.key === '3') clickedNumber('3', '3')
+    if (e.key === '4') clickedNumber('4', '4')
+    if (e.key === '5') clickedNumber('5', '5')
+    if (e.key === '6') clickedNumber('6', '6')
+    if (e.key === '7') clickedNumber('7', '7')
+    if (e.key === '8') clickedNumber('8', '8')
+    if (e.key === '9') clickedNumber('9', '9')
+    if (e.key === '.') clickedNumber('decimal', '.')
+    if (e.key === '+') clickedOperator('add', add)
+    if (e.key === '-') clickedOperator('subtract', subtract)
+    if (e.key === '/') clickedOperator('divide', divide)
+    if (e.key === '*') clickedOperator('multiply', multiply)
+    if (e.key === '%') clickedOperator('percent', percent)
+    if (e.key === '=') clickedEqual()
+    if (e.key === 'c') clickedAllClear()
+}
